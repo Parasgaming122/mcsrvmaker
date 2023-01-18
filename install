@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#add repos
+sudo add-apt-repository ppa:webupd8team/java -y
+sudo add-apt-repository ppa:flexiondotorg/minecraft -y
+
+#make sure everything is up-to-date
+sudo apt update
+sudo apt upgrade -y
+
+#install the packages
+sudo apt install -y oracle-java8-installer oracle-java8-set-default default-jre minecraft-installer
+
+#cleanup (not necessarily required)
+sudo apt-get autoclean
+
+echo "This world is about to get crafty!"
+
+#if the .minecraft folder is located under /home/username/.minecraft, you should use ~/.minecraft
+#temporarily change directory
+pushd ~/.minecraft
+
+#set permissions
+chmod 750 launcher.jar
+
+#start application in background, in order to finish script, the '&' is responsible for that
+java -Xmx1G -Xms1G -jar launcher.jar &
+
+#undo temporary directory change
+popd
